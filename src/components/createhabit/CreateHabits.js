@@ -1,27 +1,68 @@
+import { useState } from "react";
+import { useLocalStorage } from "../../utils/hook_localStorage";
 import styled from "styled-components";
+import axios from "../../configs/http";
 
 import Input from "../input/Input";
 import Button from "../button/Button";
 
+const dayList = [
+    {name: "S", id: 0},
+    {name: "T", id: 1},
+    {name: "Q", id: 2},
+    {name: "Q", id: 3},
+    {name: "S", id: 4},
+    {name: "S", id: 5},
+    {name: "D", id: 6},
+];
+
 export default function CreateHabits(){
+
+    const [ habitName, setHabitName ] = useState();
+    const [ selectedDays, setSelectedDays ] = useState([]);
+    const [ localStg, setLocalStg ] = useLocalStorage("data");
+
+
+    function requestCreationHabit(){
+        axios.post("/habits", {name: habitName, days: selectedDays}, {headers:{Authorization: `Bearer ${localStg.token}`}})
+        .then(res => console.log(res))
+        .catch(err => console.error(err))
+    }
+
+    function selectDay(day){
+        if(selectedDays.includes(day)) {
+            return setSelectedDays( selectedDays.filter(data => data !== day) )
+        }
+        const oldArr = [...selectedDays, day];
+        return setSelectedDays( oldArr );
+    }
+
+    function isChecked(condission){
+        if(condission) return "dayButtonMarked"
+        else return "dayButtonUnmarked"
+    }
+
     return (
         <Style>
             <div>
-                <Input placeholder="nome do hábito" width="100%"/>
+                <Input placeholder="nome do hábito" width="100%" onChange={e => setHabitName(e.target.value)} value={habitName} />
             </div>
             <div>
-                <Button typeButton="dayButtonUnmarked" width="2rem" height="2rem">D</Button>
-                <Button typeButton="dayButtonUnmarked" width="2rem" height="2rem">S</Button>
-                <Button typeButton="dayButtonMarked" width="2rem" height="2rem">T</Button>
-                <Button typeButton="dayButtonUnmarked" width="2rem" height="2rem">Q</Button>
-                <Button typeButton="dayButtonUnmarked" width="2rem" height="2rem">Q</Button>
-                <Button typeButton="dayButtonUnmarked" width="2rem" height="2rem">S</Button>
-                <Button typeButton="dayButtonUnmarked" width="2rem" height="2rem">S</Button>
+                {dayList.map( (each, index) => {
+                    return (
+                        <Button 
+                            key={index}
+                            onClick={() => selectDay(each.id)}
+                            typeButton={selectedDays.includes(each.id)? isChecked(true): isChecked(false)} 
+                            width="2rem" 
+                            height="2rem">{each.name}</Button>
+                    )} 
+                )}
             </div>
             <ButtonLabel>
                 <div>
-                    <Button typeButton="textButton" width="4em" height="2rem">Cancelar</Button>
-                    <Button typeButton="blueButton" width="4em" height="2rem">Salvar</Button>
+                    <Button typeButton="textButton" height="2rem">Cancelar</Button>
+                    <Button typeButton="blueButton" width="4rem" height="2rem" onClick={requestCreationHabit}>Salvar</Button>
                 </div>
             </ButtonLabel>
         </Style>
@@ -34,8 +75,8 @@ const Style = styled.div`
     flex-direction: column;
     justify-content: space-around;
     width: 90%;
-    height: 14em;
-    padding: 2rem;
+    height: 3500px;
+    padding: 1.5rem 1rem;
     background-color: #FFF;
 `;
 const ButtonLabel = styled.div`
@@ -43,7 +84,6 @@ const ButtonLabel = styled.div`
     justify-content: flex-end;
     div{
         display: flex;
-        justify-content: space-around;
-        width: 50%;
+        justify-content: flex-end;
     }
 `;

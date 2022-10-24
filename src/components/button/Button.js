@@ -3,38 +3,18 @@ import styled from "styled-components";
 
 /**
  * 
- * @param {*} typeButton "blueButton", "dayButtonUnmarked", "dayButtonMarked"
+ * @param {*} typeButton "blueButton", "dayButtonUnmarked", "dayButtonMarked", "greenChecked", "greenUnchecked"
  * @returns 
  */
-export default function Button({children, width, height, click, typeButton}){
+export default function Button({children, width, height, onClick, typeButton}){
 
-    const [buttonType, setButtonType] = React.useState(typeButton || "blueButton");
-    const style = new Object();
+    // const [buttonType, setButtonType] = React.useState(typeButton || "blueButton");
+    const style = {};
 
-    if(buttonType === "blueButton"){
-        style.background = "dodgerblue"; 
-        style.color = "white";
-        style.border = "none";
-    } else if(buttonType === "textButton"){
-        style.background = "transparent"; 
-        style.color = "#52B6FF";
-        style.border = "none";
-    } else if(buttonType === "dayButtonUnmarked"){
-        style.background = "transparent";
-        style.color = "#888";
-        style.border = "2px solid #888";
-    } else if(buttonType === "dayButtonMarked"){
-        style.background = "#888";
-        style.color = "white";
-        style.border = "none";
-    } else if(buttonType === "greenChecked"){
-        style.background = "#8FC549";
-        style.color = "white";
-        style.border = "none";
-    } else if(buttonType === "greenUnchecked"){
-        style.background = "#E7E7E7";
-        style.color = "white";
-        style.border = "none";
+    if(styleData[typeButton]){
+        style.background = styleData[typeButton].background; 
+        style.color = styleData[typeButton].color;
+        style.border = styleData[typeButton].border;
     }
 
     return (
@@ -44,10 +24,18 @@ export default function Button({children, width, height, click, typeButton}){
             border={style.border}
             mwidth={width} 
             mheight={height} 
-            onClick={click}>
+            onClick={onClick}>
             {children}
         </Style>
     );
+}
+const styleData = {
+    blueButton: {background: "dodgerblue", color: "white", border: "none"},
+    textButton: {background: "transparent", color: "#52B6FF", border: "none"},
+    dayButtonUnmarked: {background: "transparent", color: "#888", border: "2px solid #888"},
+    dayButtonMarked: {background: "#888", color: "white", border: "none"},
+    greenChecked: {background: "#8FC549", color: "white", border: "none"},
+    greenUnchecked: {background: "#E7E7E7", color: "white", border: "none"},
 }
 
 const Style = styled.button`

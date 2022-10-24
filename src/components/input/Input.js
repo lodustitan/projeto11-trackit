@@ -1,16 +1,16 @@
 import React from "react";
 import styled from "styled-components";
 
-export default function Input({children, placeholder, type, width, height}){
-    const [value, setValue] = React.useState();
+export default function Input({children, placeholder, type, width, height, value, onChange}){
 
     return (
         <Style 
             type={type}
             placeholder={placeholder}
+            value={value}
+            onChange={onChange}
             mwidth={width} 
             mheight={height} 
-            onChange={ (e) => setValue( e.target.value ) } 
         />
     );
 }
