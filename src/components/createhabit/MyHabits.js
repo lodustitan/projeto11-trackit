@@ -6,7 +6,7 @@ export default function MyHabits({toggleShowCreateHabit}){
     return (
         <Style>
             <span>Meus hábitos</span>
-            <Button width="2rem" height="2rem" onClick={toggleShowCreateHabit}>+</Button>
+            <Button drivenIdentifier="create-habit-btn" width="2rem" height="2rem" onClick={() => toggleShowCreateHabit(true)}>+</Button>
         </Style>
     );
 }

@@ -16,7 +16,7 @@ const dayList = [
     {name: "D", id: 6},
 ];
 
-export default function CreateHabits(){
+export default function CreateHabits({toggleShowCreateHabit, refreshHabitList}){
 
     const [ habitName, setHabitName ] = useState();
     const [ selectedDays, setSelectedDays ] = useState([]);
@@ -25,7 +25,10 @@ export default function CreateHabits(){
 
     function requestCreationHabit(){
         axios.post("/habits", {name: habitName, days: selectedDays}, {headers:{Authorization: `Bearer ${localStg.token}`}})
-        .then(res => console.log(res))
+        .then(res => {
+            console.log(res);
+            refreshHabitList()
+        })
         .catch(err => console.error(err))
     }
 
@@ -45,12 +48,13 @@ export default function CreateHabits(){
     return (
         <Style>
             <div>
-                <Input placeholder="nome do hábito" width="100%" onChange={e => setHabitName(e.target.value)} value={habitName} />
+                <Input drivenIdentifier="input-habit-name" placeholder="nome do hábito" width="100%" onChange={e => setHabitName(e.target.value)} value={habitName} />
             </div>
             <div>
                 {dayList.map( (each, index) => {
                     return (
-                        <Button 
+                        <Button
+                            drivenIdentifier="week-day-btn" 
                             key={index}
                             onClick={() => selectDay(each.id)}
                             typeButton={selectedDays.includes(each.id)? isChecked(true): isChecked(false)} 
@@ -61,8 +65,8 @@ export default function CreateHabits(){
             </div>
             <ButtonLabel>
                 <div>
-                    <Button typeButton="textButton" height="2rem">Cancelar</Button>
-                    <Button typeButton="blueButton" width="4rem" height="2rem" onClick={requestCreationHabit}>Salvar</Button>
+                    <Button drivenIdentifier="cancel-habit-create-btn" typeButton="textButton" height="2rem" onClick={() => toggleShowCreateHabit(false)}>Cancelar</Button>
+                    <Button drivenIdentifier="save-habit-create-btn" typeButton="blueButton" width="4rem" height="2rem" onClick={requestCreationHabit}>Salvar</Button>
                 </div>
             </ButtonLabel>
         </Style>

@@ -1,5 +1,6 @@
 import styled from "styled-components";
-import { useState } from "react";
+import { useState, useContext } from "react";
+import { globalVars } from "../../App";
 
 const dateMock = [
     {id: 0, name: "Domingo"},
@@ -13,7 +14,8 @@ const dateMock = [
 
 export default function DateToday(){
 
-    const [date, setDate] = useState( new Date() );
+    const [ date, setDate ] = useState( new Date() );
+    const { todayList } = useContext(globalVars);
 
     function getTodayText(){
         let dia;
@@ -25,10 +27,26 @@ export default function DateToday(){
         return dia;
     }
 
+    function getProgressPercent(){
+        return parseInt((todayList
+            .map( data => {
+                if(data.done === true) return 1;
+                else return 0;
+            })
+            .reduce( (val1, val2) => val1 + val2, 0) * 100)/ todayList.length) 
+    }
+    
     return (
         <Style>
-            <Title>{getTodayText()}, {date.getDate()}/{date.getMonth()}</Title>
-            <Description>Nenhum hábito concluído ainda</Description>
+            <Title data-identifier="today-infos">{getTodayText()}, {date.getDate()}/{date.getMonth()}</Title>
+            <Description 
+                data-identifier="today-infos"
+                todayList={todayList} 
+                getProgressPercent={getProgressPercent}>
+                    {todayList? 
+                        getProgressPercent()+ "% dos hábitos concluídos":
+                        "Nenhum hábito concluído ainda"}
+            </Description>
         </Style>
     );
 }
@@ -47,5 +65,7 @@ const Title = styled.div`
 `;
 
 const Description = styled.div`
-    color: #BABABA;
+    color: ${({todayList, getProgressPercent}) => {
+        return todayList && (getProgressPercent() > 0) ? "#8FC549": "#BABABA";
+    }};
 `;

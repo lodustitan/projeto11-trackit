@@ -3,10 +3,10 @@ import styled from "styled-components";
 
 import { Link } from "react-router-dom";
 
-export default function Redirect({children, to}){
+export default function Redirect({children, to, drivenIdentifier}){
     return (
         <Style>
-            <Link to={to}>
+            <Link to={to} data-identifier={drivenIdentifier}>
                 {children}
             </Link>
         </Style>

@@ -23,7 +23,7 @@ export default function Footer({list}){
 
     return (
         <Style>
-            <StyleLink to="/habitos">Hábitos</StyleLink>
+            <StyleLink data-identifier="habit-page-action" to="/habitos">Hábitos</StyleLink>
             <div className='float'>
                 <CircularProgressbarWithChildren  
                     value={progress}
@@ -43,7 +43,7 @@ export default function Footer({list}){
                     <StyleLinkWhite to="/">Hoje</StyleLinkWhite>
                 </CircularProgressbarWithChildren>
             </div>
-            <StyleLink to="/historia">Histórico</StyleLink>
+            <StyleLink data-identifier="historic-page-action" to="/historia">Histórico</StyleLink>
         </Style>
     );
 }

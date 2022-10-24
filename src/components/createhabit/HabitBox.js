@@ -16,7 +16,7 @@ const dayList = [
     {name: "D", id: 7},
 ];
 
-export default function HabitBox({uid, name, days}){
+export default function HabitBox({uid, name, days, refreshHabitList}){
 
     const [ localStg, setLocalStg ] = useLocalStorage("data");
 
@@ -27,16 +27,19 @@ export default function HabitBox({uid, name, days}){
     
     function deleteHabit(){
         axios.delete(`/habits/${uid}`, {headers: {Authorization: `Bearer ${localStg.token}`}})
-        .then(res => console.log(res))
+        .then(res => {
+            console.log(res);
+            refreshHabitList();
+        })
         .catch(err => console.error(err));
     }
 
     return (
         <Style>
-            <Float onClick={deleteHabit}>
+            <Float onClick={deleteHabit} data-identifier="delete-habit-btn">
                 <BsTrash />
             </Float>
-            <div>{name}</div>
+            <div data-identifier="habit-name">{name}</div>
             <div>
                 {dayList.map( (each, index) => {
                     return <Button 
@@ -67,4 +70,5 @@ const Float = styled.div`
     position: absolute;
     top: 1rem;
     right: 1rem;
+    cursor: pointer;
 `;

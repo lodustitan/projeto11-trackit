@@ -6,7 +6,7 @@ import styled from "styled-components";
  * @param {*} typeButton "blueButton", "dayButtonUnmarked", "dayButtonMarked", "greenChecked", "greenUnchecked"
  * @returns 
  */
-export default function Button({children, width, height, onClick, typeButton}){
+export default function Button({children, width, height, onClick, typeButton, drivenIdentifier}){
 
     // const [buttonType, setButtonType] = React.useState(typeButton || "blueButton");
     const style = {};
@@ -19,6 +19,7 @@ export default function Button({children, width, height, onClick, typeButton}){
 
     return (
         <Style 
+            data-identifier={drivenIdentifier}
             backgroundColor={style.background}
             color={style.color}
             border={style.border}

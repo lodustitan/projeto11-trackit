@@ -36,13 +36,14 @@ export default function HabitToday({name, done, currentSequence, highestSequence
     }
 
     return(
-        <Style>
+        <Style data-identifier="today-infos">
             <div>
                 <StyleTitle>{name}</StyleTitle>
                 <StyleSmallFont>Sequencia atual: {currentSequence} dias</StyleSmallFont>
                 <StyleSmallFont>Seu recorde: {highestSequence} dias</StyleSmallFont>
             </div>
             <Button 
+                drivenIdentifier="done-habit-btn"
                 onClick={toggleTask}
                 typeButton={selectedBHT? "greenChecked": "greenUnchecked"} 
                 width="3em" 

@@ -1,10 +1,11 @@
 import React from "react";
 import styled from "styled-components";
 
-export default function Input({children, placeholder, type, width, height, value, onChange}){
+export default function Input({children, placeholder, type, width, height, value, onChange, drivenIdentifier}){
 
     return (
         <Style 
+            data-identifier={drivenIdentifier}
             type={type}
             placeholder={placeholder}
             value={value}

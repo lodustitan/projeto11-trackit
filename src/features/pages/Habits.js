@@ -20,13 +20,23 @@ export default function Habits(){
     const [ localStg, setLocalStg ] = useLocalStorage("data");
 
     useEffect(()=>{
-        axios.get("/habits", {headers: {Authorization: `Bearer ${localStg.token}`}})
-        .then(res => setMyHabitList(res.data))
-        .catch(err => console.error(err));
+        refreshHabitList()
     }, []);
 
-    function toggleShowCreateHabit(){
-        setShowCreateHabit(!showCreateHabit);
+    function refreshHabitList(){
+        axios.get("/habits", {headers: {Authorization: `Bearer ${localStg.token}`}})
+        .then(res => {
+            if(res.data.length > 0){
+                setMyHabitList(res.data);
+            }else{
+                setMyHabitList();
+            }
+        })
+        .catch(err => console.error(err));
+    }
+
+    function toggleShowCreateHabit(toggle){
+        setShowCreateHabit(toggle);
     }
 
     return(
@@ -34,10 +44,13 @@ export default function Habits(){
             <Header />
             <Box>
                 <MyHabits toggleShowCreateHabit={toggleShowCreateHabit} />
-                {showCreateHabit && <CreateHabits />}
-                {myHabitList?.map((data, index) => {
-                    return <HabitBox key={index} uid={data.id} name={data.name} days={data.days} />
-                })}
+                {showCreateHabit && <CreateHabits toggleShowCreateHabit={toggleShowCreateHabit} refreshHabitList={refreshHabitList} />}
+                {(myHabitList)? 
+                    myHabitList.map((data, index) => {
+                        return <HabitBox key={index} uid={data.id} name={data.name} days={data.days} refreshHabitList={refreshHabitList} />
+                    }): 
+                    <div className="habit" data-identifier="no-habit-message">Você não tem nenhum hábito cadastrado ainda. Adicione um hábito para começar a trackear!</div>
+                }
             </Box>
             <Footer list={todayList} />
         </Style>
@@ -61,5 +74,9 @@ const Box = styled.div`
     overflow-y: auto;
     &::-webkit-scrollbar{
         width: 0;
+    }
+    .habit{
+        padding: 1rem;
+        color: #666;
     }
 `;

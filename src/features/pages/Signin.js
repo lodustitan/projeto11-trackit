@@ -36,10 +36,28 @@ export default function SignIn(){
         <Style>
             <img src={logo} alt="img" />
             <Forms>
-                <Input width="100%" height="46px" placeholder="email" type="email" onChange={ e => setIEmail(e.target.value)    } value={ inputIEmail } />
-                <Input width="100%" height="46px" placeholder="senha" type="password" onChange={ e => setIPassword(e.target.value) } value={ inputIPassword } />
-                <Button width="100%" height="46px" onClick={login}>Entrar</Button>
-                <Redirect to="/cadastro">Não tem uma conta? Cadastre-se!</Redirect>
+                <Input 
+                    drivenIdentifier="input-email"
+                    width="100%" 
+                    height="46px" 
+                    placeholder="email" 
+                    type="email" 
+                    onChange={ e => setIEmail(e.target.value) } 
+                    value={ inputIEmail } />
+                <Input 
+                    drivenIdentifier="input-password"
+                    width="100%" 
+                    height="46px" 
+                    placeholder="senha" 
+                    type="password" 
+                    onChange={ e => setIPassword(e.target.value) } 
+                    value={ inputIPassword } />
+                <Button 
+                    drivenIdentifier="input-btn"
+                    width="100%" 
+                    height="46px" 
+                    onClick={login}>Entrar</Button>
+                <Redirect to="/cadastro" drivenIdentifier="sign-up-action">Não tem uma conta? Cadastre-se!</Redirect>
             </Forms>
         </Style>
     );

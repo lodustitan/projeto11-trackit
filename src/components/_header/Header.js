@@ -15,7 +15,7 @@ export default function Header(){
                 <StyleImg src={ logo } alt="trackit" />
             </div>
             <div>
-                <StyleImgProfile src={ localStg.image } alt="profile"/>
+                <StyleImgProfile data-identifier="avatar" src={ localStg.image } alt="profile"/>
             </div>
         </Style>
     );
