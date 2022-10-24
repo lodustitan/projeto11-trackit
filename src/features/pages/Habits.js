@@ -14,10 +14,10 @@ import { globalVars } from "../../App";
 
 export default function Habits(){
 
-    const { todayList, setTodayList } = useContext(globalVars);
+    const { todayList } = useContext(globalVars);
     const [ myHabitList, setMyHabitList ] = useState();
     const [ showCreateHabit, setShowCreateHabit ] = useState();
-    const [ localStg, setLocalStg ] = useLocalStorage("data");
+    const [ localStg ] = useLocalStorage("data");
 
     useEffect(()=>{
         refreshHabitList()

@@ -1,5 +1,4 @@
 import React, { useState } from "react";
-import styled from "styled-components";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 
 import SignIn from "./features/pages/Signin";
@@ -34,11 +33,5 @@ function App() {
         </globalVars.Provider>
     );
 }
-
-
-const Header = styled.div`
-    display: ${({visible}) => visible? "block": "none"};
-    
-`;
 
 export default App;

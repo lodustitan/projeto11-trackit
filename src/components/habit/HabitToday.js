@@ -1,4 +1,4 @@
-import { useState, useEffect } from "react";
+import { useState } from "react";
 import { useLocalStorage } from "../../utils/hook_localStorage";
 import styled from "styled-components";
 import axios from "../../configs/http";

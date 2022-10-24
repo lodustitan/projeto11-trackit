@@ -9,8 +9,11 @@ import Input from "../../components/input/Input";
 import Button from "../../components/button/Button";
 import Redirect from "../../components/textlink/Redirect";
 
+import { ThreeDots } from "react-loader-spinner";
+
 export default function SignIn(){
 
+    const [isLogging, setLogging] = useState(false);
     const [inputIEmail, setIEmail] = useState();
     const [inputIPassword, setIPassword] = useState();
     const [localStg, setLocalStg] = useLocalStorage("data");
@@ -22,14 +25,22 @@ export default function SignIn(){
     }, [localStg])
 
     function login(){
+        if(isLogging) return;
         if(!inputIEmail || !inputIPassword) return window.alert("Os campos precisam ser preenchidos corretamente!");
+        setLogging(true);
 
         axios.post("/auth/login", {
             email: inputIEmail,
             password: inputIPassword
         })
-        .then(res => setLocalStg(res.data))
-        .catch(err => console.error(err))
+        .then(res => {
+            setLocalStg(res.data);
+            setLogging(false);
+        })
+        .catch(err => {
+            console.error(err);
+            setLogging(false);
+        })
     }
 
     return(
@@ -37,6 +48,7 @@ export default function SignIn(){
             <img src={logo} alt="img" />
             <Forms>
                 <Input 
+                    disabled={isLogging? "disabled": ""}
                     drivenIdentifier="input-email"
                     width="100%" 
                     height="46px" 
@@ -45,6 +57,7 @@ export default function SignIn(){
                     onChange={ e => setIEmail(e.target.value) } 
                     value={ inputIEmail } />
                 <Input 
+                    disabled={isLogging? "disabled": ""}
                     drivenIdentifier="input-password"
                     width="100%" 
                     height="46px" 
@@ -56,7 +69,7 @@ export default function SignIn(){
                     drivenIdentifier="input-btn"
                     width="100%" 
                     height="46px" 
-                    onClick={login}>Entrar</Button>
+                    onClick={login}>{ (isLogging)? <ThreeDots color="#fff"/>: "Entrar"}</Button>
                 <Redirect to="/cadastro" drivenIdentifier="sign-up-action">Não tem uma conta? Cadastre-se!</Redirect>
             </Forms>
         </Style>

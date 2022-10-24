@@ -1,4 +1,3 @@
-import { useState } from "react";
 import styled from "styled-components";
 import logo from "../../assets/icons/miniLogo_Trackit.png"
 import { useLocalStorage } from "../../utils/hook_localStorage";
@@ -6,7 +5,7 @@ import { useLocalStorage } from "../../utils/hook_localStorage";
 
 export default function Header(){
 
-    const [localStg, setLocalStg] = useLocalStorage("data");
+    const [localStg] = useLocalStorage("data");
 
     console.log(localStg)
     return (

@@ -6,6 +6,8 @@ import axios from "../../configs/http";
 import Input from "../input/Input";
 import Button from "../button/Button";
 
+import { ThreeDots } from "react-loader-spinner";
+
 const dayList = [
     {name: "S", id: 0},
     {name: "T", id: 1},
@@ -18,18 +20,26 @@ const dayList = [
 
 export default function CreateHabits({toggleShowCreateHabit, refreshHabitList}){
 
+    const [ isCreating, setIsCreating ] = useState(false);
     const [ habitName, setHabitName ] = useState();
     const [ selectedDays, setSelectedDays ] = useState([]);
-    const [ localStg, setLocalStg ] = useLocalStorage("data");
+    const [ localStg ] = useLocalStorage("data");
 
 
     function requestCreationHabit(){
+        if(isCreating) return;
+        setIsCreating(true);
+
         axios.post("/habits", {name: habitName, days: selectedDays}, {headers:{Authorization: `Bearer ${localStg.token}`}})
         .then(res => {
             console.log(res);
+            setIsCreating(false);
             refreshHabitList()
         })
-        .catch(err => console.error(err))
+        .catch(err => {
+            console.error(err);
+            setIsCreating(false);
+        })
     }
 
     function selectDay(day){
@@ -59,7 +69,7 @@ export default function CreateHabits({toggleShowCreateHabit, refreshHabitList}){
                             onClick={() => selectDay(each.id)}
                             typeButton={selectedDays.includes(each.id)? isChecked(true): isChecked(false)} 
                             width="2rem" 
-                            height="2rem">{each.name}</Button>
+                            height="2rem">{ (isCreating)? <ThreeDots color="#fff" visible={false}/>: each.name}</Button>
                     )} 
                 )}
             </div>
@@ -82,6 +92,9 @@ const Style = styled.div`
     height: 14rem;
     padding: 1.5rem 1rem;
     background-color: #FFF;
+    div{
+        display: flex;
+    }
 `;
 const ButtonLabel = styled.div`
     display: flex;

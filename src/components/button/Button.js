@@ -8,7 +8,6 @@ import styled from "styled-components";
  */
 export default function Button({children, width, height, onClick, typeButton, drivenIdentifier}){
 
-    // const [buttonType, setButtonType] = React.useState(typeButton || "blueButton");
     const style = {};
 
     if(styleData[typeButton]){
@@ -41,6 +40,9 @@ const styleData = {
 
 const Style = styled.button`
     border-radius: 4.63636px;
+    display: flex; 
+    justify-content: center;
+    align-items: center;
     background: ${ ({backgroundColor})=> backgroundColor ? backgroundColor: "#52B6FF" };
     border: ${ ({border})=> border ? border: "none" };
     font-size: 20px;

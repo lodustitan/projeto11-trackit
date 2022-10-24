@@ -18,7 +18,7 @@ const dayList = [
 
 export default function HabitBox({uid, name, days, refreshHabitList}){
 
-    const [ localStg, setLocalStg ] = useLocalStorage("data");
+    const [ localStg ] = useLocalStorage("data");
 
     function isChecked(condission){
         if(condission) return "dayButtonMarked";
@@ -65,6 +65,9 @@ const Style = styled.div`
     padding: 2rem 1rem;
     margin: 1rem 0;
     background-color: #FFF;
+    div{
+        display: flex;
+    }
 `;
 const Float = styled.div`
     position: absolute;

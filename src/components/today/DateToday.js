@@ -14,7 +14,7 @@ const dateMock = [
 
 export default function DateToday(){
 
-    const [ date, setDate ] = useState( new Date() );
+    const [ date ] = useState( new Date() );
     const { todayList } = useContext(globalVars);
 
     function getTodayText(){
@@ -22,7 +22,9 @@ export default function DateToday(){
         dateMock.some(each => {
             if(each.id === date.getDay()) {
                 dia = each.name;
+                return true;
             }
+            return false;
         })
         return dia;
     }
