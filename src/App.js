@@ -5,6 +5,7 @@ import { BrowserRouter, Routes, Route } from "react-router-dom";
 import SignIn from "./features/pages/Signin";
 import SignUp from "./features/pages/Signup";
 import Habits from "./features/pages/Habits";
+import History from "./features/pages/History";
 import Today from "./features/pages/Today";
 import PageNotFounded from "./features/notFound/PageNotFound";
 
@@ -24,6 +25,7 @@ function App() {
                     <Route path="*" element={<PageNotFounded />} />
                     <Route path="/" element={<SignIn />} />
                     <Route path="/cadastro" element={<SignUp />} />
+                    <Route path="/historia" element={<History />} />
                     <Route path="/habitos" element={<Habits />} />
                     <Route path="/hoje" element={<Today />} />
                 </Routes>

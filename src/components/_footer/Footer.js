@@ -43,7 +43,7 @@ export default function Footer({list}){
                     <StyleLinkWhite to="/">Hoje</StyleLinkWhite>
                 </CircularProgressbarWithChildren>
             </div>
-            <StyleLink to="/habitos">Histórico</StyleLink>
+            <StyleLink to="/historia">Histórico</StyleLink>
         </Style>
     );
 }
@@ -57,6 +57,7 @@ const StyleLinkWhite = styled(Link)`
     text-decoration: none;
 `;
 const Style = styled.div`
+    z-index: 10;
     box-sizing: border-box;
     display: flex;
     justify-content: space-between;

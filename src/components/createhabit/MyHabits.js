@@ -2,11 +2,11 @@ import styled from "styled-components";
 
 import Button from "../button/Button";
 
-export default function MyHabits(){
+export default function MyHabits({toggleShowCreateHabit}){
     return (
         <Style>
             <span>Meus hábitos</span>
-            <Button width="2rem" height="2rem">+</Button>
+            <Button width="2rem" height="2rem" onClick={toggleShowCreateHabit}>+</Button>
         </Style>
     );
 }

@@ -16,20 +16,25 @@ export default function Habits(){
 
     const { todayList, setTodayList } = useContext(globalVars);
     const [ myHabitList, setMyHabitList ] = useState();
+    const [ showCreateHabit, setShowCreateHabit ] = useState();
     const [ localStg, setLocalStg ] = useLocalStorage("data");
 
     useEffect(()=>{
         axios.get("/habits", {headers: {Authorization: `Bearer ${localStg.token}`}})
         .then(res => setMyHabitList(res.data))
         .catch(err => console.error(err));
-    }, [])
+    }, []);
+
+    function toggleShowCreateHabit(){
+        setShowCreateHabit(!showCreateHabit);
+    }
 
     return(
         <Style>
             <Header />
             <Box>
-                <MyHabits />
-                <CreateHabits />
+                <MyHabits toggleShowCreateHabit={toggleShowCreateHabit} />
+                {showCreateHabit && <CreateHabits />}
                 {myHabitList?.map((data, index) => {
                     return <HabitBox key={index} uid={data.id} name={data.name} days={data.days} />
                 })}

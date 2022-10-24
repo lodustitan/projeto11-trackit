@@ -75,7 +75,7 @@ const Style = styled.div`
     flex-direction: column;
     justify-content: space-around;
     width: 90%;
-    height: 3500px;
+    height: 14rem;
     padding: 1.5rem 1rem;
     background-color: #FFF;
 `;
